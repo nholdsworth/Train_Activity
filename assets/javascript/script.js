@@ -81,7 +81,7 @@ $(document).ready(function () {
         now holds a reference to the current time from moment.js*/
         let now = moment();
         console.log(now);
-
+        // I want the most Recent train to be updated using the if statement below, right now the vairables do not match but I want to clone the first train time in the variable mostRecentTrain and then have it updated by the frequency variable so that the most recent train time will always be the most recent one that has arrived since now 
         let mostRecentTrain = moment(childSnapshot.val().firstTrainTime);
         console.log(mostRecentTrain);
 
