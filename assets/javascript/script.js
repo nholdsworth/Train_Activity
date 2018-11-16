@@ -83,41 +83,10 @@ $(document).ready(function () {
         // calling the function render table row after the event listener for child_added in firebase
         renderTableRow();
 
-        /*these variables will hold my moments
-        now holds a reference to the current time from moment.js*/
-        let now = moment();
-        console.log("It is now exactly: " + now.format("hh:mm"));
-        
-        let tFrequency = parseInt(childSnapshot.val().frequency);
-        console.log(tFrequency);
- 
-        // I want the most Recent train to be updated using the if statement below, right now the vairables do not match but I want to clone the first train time in the variable mostRecentTrain and then have it updated by the frequency variable so that the most recent train time will always be the most recent one that has arrived since now 
-        
-        // DISREGARD the comments above because getting the difference of that first train
-        let firstTrainEver = moment(childSnapshot.val().firstTrainTime, "HH:mm").subtract(2, "days");
-        console.log(firstTrainEver);
-
-        
-        let timeDifference = now.diff(moment(firstTrainEver), "minutes");
-        console.log("The time difference between the first train and now is:" + timeDifference);
-
-        let sinceRecentArrival = timeDifference % tFrequency;
-        console.log("It's been " + sinceRecentArrival + " minutes since the last train arrived!");
-
-        let minutesAway = tFrequency - sinceRecentArrival;
-        console.log("The next train will arrive in " + minutesAway + " minutes.");
-
-        let nextArrival = now.add(minutesAway, "minutes");
-        console.log("The next train will arrive at: " + moment(nextArrival).format("hh:mm"));
-
-
+        // I want the most Recent train to be updated using the if statement below, right now the vairables do not match but I want to clone the first train time in the variable mostRecentTrain and then have it updated by the frequency variable so that the most recent train time will always be the most recent one that has arrived since now.  I am saving all of these comments and commented out stuff becuase I think it helps show my process and the fact that I didn't just jump right to the provided solution to the logical problem in the train example excercise.  I worked through it first and got to a solution, albeit a terrible and not actually workable solution but never the less a solution that allowed for solving the bulk of the logic problem on my own becuase it gave me a framework in which to think about the solution.  Here's what I was originally thinking that helped me even though it was wrong, it gave me a good understanding of the whole problem and what was needed:
 
         // let minutesPassedSinceLastTrain = timeDifference % parseInt(moment(childSnapshot.val().frequency));
         // console.log("this is the number of minutes since the last train arrived")
-
-
-
-
 
         // // subtracts current time from the last arrival time to give us the number of minutes since the last train
         // console.log(moment(childSnapshot.val().firstTrainTime));
@@ -136,7 +105,37 @@ $(document).ready(function () {
         //     nextArrival = frequency;
         // };
 
-        
+
+        // Using the solution in the train excercise helped me understand a cleaner way of arriving at the time since the most recent train arrived.  Getting the difference in time  between that first train and now using the handy dandy .diff method gives us a way to figure out how many minutes since the last train arrived without having to set an interval and have a function constantly checking to see if it's time to update the mostRecentTrain variable as I had originally envisioned.  Thanks for reading my story, now back to the code...
+
+        /*these variables will hold my moments
+        now holds a reference to the current time from moment.js*/
+        let now = moment();
+        console.log("It is now exactly: " + now.format("hh:mm"));
+
+        // this variable changes the frequency of the most recently added train from a string into a number so that we can do math with it.
+        let tFrequency = parseInt(childSnapshot.val().frequency);
+        console.log(tFrequency);
+
+        // This Variable holds a reference to the time of the first train and sets it back in time by two days so that we can always get a difference between the first train time and now.  Otherwise if the first train is at 4 pm and it is only 3 pm then the solution would not work.   
+        let firstTrainEver = moment(childSnapshot.val().firstTrainTime, "HH:mm").subtract(2, "days");
+        console.log(firstTrainEver);
+
+        // This variable holds a reference to the difference between now and the first train time 
+        let timeDifference = now.diff(moment(firstTrainEver), "minutes");
+        console.log("The time difference between the first train and now is:" + timeDifference);
+
+        // This variable holds the time difference between now and the first train divided by the frequency to provide the number of minutes passed since the most recent train arrival
+        let sinceRecentArrival = timeDifference % tFrequency;
+        console.log("It's been " + sinceRecentArrival + " minutes since the last train arrived!");
+
+        // Subtracting the frequency from the amount of time since the last train arrived gives us the minutes away
+        let minutesAway = tFrequency - sinceRecentArrival;
+        console.log("The next train will arrive in " + minutesAway + " minutes.");
+
+        // adding the minutes away to now gives us how long until the next train arrives
+        let nextArrival = now.add(minutesAway, "minutes");
+        console.log("The next train will arrive at: " + moment(nextArrival).format("hh:mm"));
 
     });
 
