@@ -23,7 +23,6 @@ $(document).ready(function () {
 
         // variables that hold the reference to the data entered in the form
         let trainName = $("#train-name").val().trim();
-        console.log(trainName);
         let destination = $("#destination").val().trim();
         let firstTrainTime = $("#first-train-time").val().trim();
         let frequency = $("#frequency").val().trim();
@@ -49,41 +48,76 @@ $(document).ready(function () {
         // variable for the train table
         let trains = $("#trains");
 
-        console.log(childSnapshot.val().trainName);
-
         // append the data to the tablebody from firebase
-        // creating a funciton to dynamically render the tableData entered by user
+        // creating a funciton to dynamically render the tableData entered by user into a new table row each time
         function renderTableRow() {
 
+            // this variable holds a reference to a new table row HTML element
             let newTR = $("<tr>");
 
-
+            // this function creates an new td element with the text of the most recently entered data for each input on the form 
             function renderCell(cellData) {
-
+                // variable that holds a reference to a new td created each time a new data set is added to firebase
                 let newTD = $("<td>");
+                // sets the text of the new td equal to the value passed as an argument into the renderCell function
                 newTD.text(cellData);
+                // appends the new table data cell to the new table row
                 newTR.append(newTD);
             }
-
+            //render a cell with the value of the most recently added train name
             renderCell(childSnapshot.val().trainName);
+            //render a cell with the value of the most recently added destination
             renderCell(childSnapshot.val().destination);
+            //render a cell with the value of the most recently added train frequency
             renderCell(childSnapshot.val().frequency);
+            // //render a cell with the value of the next arrival
             renderCell('need formula');
+            //render a cell with the value of minutes away
             renderCell('need formula');
 
+            // appending the new table row with all the newly appended table data to the table "#trains"
             trains.append(newTR);
 
         };
 
+        // calling the function render table row after the event listener for child_added in firebase
         renderTableRow();
 
         /*these variables will hold my moments
         now holds a reference to the current time from moment.js*/
         let now = moment();
-        console.log(now);
+        console.log("It is now exactly: " + now.format("hh:mm"));
+        
+        let tFrequency = parseInt(childSnapshot.val().frequency);
+        console.log(tFrequency);
+ 
         // I want the most Recent train to be updated using the if statement below, right now the vairables do not match but I want to clone the first train time in the variable mostRecentTrain and then have it updated by the frequency variable so that the most recent train time will always be the most recent one that has arrived since now 
-        let mostRecentTrain = moment(childSnapshot.val().firstTrainTime);
-        console.log(mostRecentTrain);
+        
+        // DISREGARD the comments above because getting the difference of that first train
+        let firstTrainEver = moment(childSnapshot.val().firstTrainTime, "HH:mm").subtract(2, "days");
+        console.log(firstTrainEver);
+
+        
+        let timeDifference = now.diff(moment(firstTrainEver), "minutes");
+        console.log("The time difference between the first train and now is:" + timeDifference);
+
+        let sinceRecentArrival = timeDifference % tFrequency;
+        console.log("It's been " + sinceRecentArrival + " minutes since the last train arrived!");
+
+        let minutesAway = tFrequency - sinceRecentArrival;
+        console.log("The next train will arrive in " + minutesAway + " minutes.");
+
+        let nextArrival = now.add(minutesAway, "minutes");
+        console.log("The next train will arrive at: " + moment(nextArrival).format("hh:mm"));
+
+
+
+        // let minutesPassedSinceLastTrain = timeDifference % parseInt(moment(childSnapshot.val().frequency));
+        // console.log("this is the number of minutes since the last train arrived")
+
+
+
+
 
         // // subtracts current time from the last arrival time to give us the number of minutes since the last train
         // console.log(moment(childSnapshot.val().firstTrainTime));
@@ -102,7 +136,7 @@ $(document).ready(function () {
         //     nextArrival = frequency;
         // };
 
-        // this variable holds a reference to a new table row HTML element
+        
 
     });
 
