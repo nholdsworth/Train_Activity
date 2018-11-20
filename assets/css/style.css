@@ -1,0 +1,58 @@
+body {
+    background-image: url(../forest_of_neldoreth.webp);
+    background-size: cover;
+    height: 100%;
+    background-position: center;
+    z-index: 1;
+}
+
+#bbox {
+    z-index: 2;
+    height: 20%;
+    width: 100%;
+    background-color: rgba(69, 119, 64, 0.918);
+    padding: 6%;
+    opacity: .8;
+    position: absolute;
+    border-radius: 0 0 25px 25px;
+}
+
+.jumbotron {
+    margin: 0 auto;
+    background-color: transparent;
+    color: whitesmoke;
+    font-family: 'Uncial Antiqua';
+    z-index: 3;
+    position: relative;
+    text-shadow: 6px 6px rgba(18, 18, 19, 0.541);
+}
+
+.card-header{
+    background-color: rgba(69, 119, 64, 0.698);
+    font-family: 'Della Respira';
+    color: whitesmoke;
+    text-align: center;
+    font-size: 1.4em;
+}
+
+.info{
+    background-color: rgba(238, 234, 234, 0.726);
+    font-family: 'Della Respira';
+    padding: 1em;
+    margin: 0;
+}
+
+.add-box{
+    margin-top: 2em;
+}
+
+.btn{
+    background-color: rgba(69, 119, 64, 0.877);
+    font-family: 'Della Respira';
+    color: whitesmoke;
+    text-align: center;
+    font-size: 1.4em;
+}
+
+
+

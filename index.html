@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
         crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Della+Respira|Titillium+Web|Uncial+Antiqua" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
@@ -22,48 +23,51 @@
 
 
 <body>
+    <div id="bbox"></div>
+    
     <div class="jumbotron text-center">
-        <h1 class="display-4">TRAIN SCHEDULE</h1>
-        <p class="lead">getting you where you need to be when you need top be there</p>
+        <h1 class="display-4">TRAINS OF BELERIAND</h1>
+        <p class="lead" id="lead">and to the lands of the North</p>
         <hr class="my-4">
     </div>
     <div class="row">
         <div class="col-2">
         </div>
-        <div class="col-8 pl-0 pr-0">
-            <div class="card-header border">Current Train Schedule
+        <div class="col-8 pl-0 pr-0" id="wrapper">
+            
+            <div class="card-header" id="schedule-header">Current Train Schedule
             </div>
-            <table class="table border">
+            <table class="table info" id="table">
                 <thead>
                     <tr>
-                        <th scope="col">Train Name</th>
-                        <th scope="col">Destination</th>
-                        <th scope="col">Frequency (min)</th>
-                        <th scope="col">Next Arrival</th>
-                        <th scope="col">Minutes Away</th>
+                        <th scope="col" class="info">Train Name</th>
+                        <th scope="col" class="info">Destination</th>
+                        <th scope="col" class="info">Frequency (min)</th>
+                        <th scope="col" class="info">Next Arrival</th>
+                        <th scope="col" class="info">Minutes Away</th>
                     </tr>
                 </thead>
-                <tbody  id="trains">
+                <tbody class="info" id="trains">
                     <!-- dynamic table data on submit button-->
                 </tbody>
             </table>
-            <div class="border">
+            <div class="add-box">
                 <div class="card-header">Add Train
                 </div>
                 <form>
-                    <div class="form-group col-12 mt-3">
-                        <label for="train-name">Train Name</label>
-                        <input type="name" class="form-control" id="train-name" placeholder="The little engine that could">
+                    <div class="form-group col-12 info">
+                        <label for="train-name"><b>Train Name</b></label>
+                        <input type="name" class="form-control" id="train-name" placeholder="Gondolin">
                     </div>
-                    <div class="form-group col-12">
+                    <div class="form-group col-12 info">
                         <label for="destination">Destination</label>
                         <input type="text" class="form-control" id="destination">
                     </div>
-                    <div class="form-group col-12">
+                    <div class="form-group col-12 info">
                         <label for="first-train-time">First Train Time (HH:mm-military time)</label>
                         <input type="time" class="form-control" id="first-train-time" placeholder="15:00">
                     </div>
-                    <div class="form-group col-12">
+                    <div class="form-group col-12 info">
                         <label for="frequency">Frequency (mm)</label>
                         <input type="text" class="form-control" id="frequency">
                     </div>
